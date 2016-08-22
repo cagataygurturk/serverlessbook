@@ -22,6 +22,14 @@ public abstract class LambdaHandler<I, O> implements RequestStreamHandler {
         return (Class<I>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
+    private I deserializeEventJson(InputStream inputStream, Class<I> clazz) throws IOException {
+        return mapper.readerFor(clazz).readValue(inputStream);
+    }
+
+    private void serializeOutput(OutputStream outputStream, O output) throws IOException {
+        mapper.writer().writeValue(outputStream, output);
+    }
+
     @Override
     public void handleRequest(InputStream input, OutputStream output, Context context) throws IOException {
     }
