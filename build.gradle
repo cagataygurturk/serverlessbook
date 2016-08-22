@@ -49,4 +49,7 @@ configure(subprojects.findAll { it.name.startsWith("lambda-") }) {
     dependencies {
         compile project(':lambda')
     }
+
+    apply plugin: "com.github.johnrengelman.shadow"
+    build.finalizedBy shadowJar
 }
