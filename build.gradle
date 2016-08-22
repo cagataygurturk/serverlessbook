@@ -1,3 +1,16 @@
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
 }
+
+// allprojects means this configuration
+// will be inherited by the root project itself and subprojects
+allprojects {
+    // Artifact Id of the projct
+    group 'com.serverlessbook'
+    // Version of the project
+    version '1.0'
+    // Gradle JAVA plugin needed for JAVA support
+    apply plugin: 'java'
+    // We will be using JAVA 8, then 1.8
+    sourceCompatibility = 1.8
+}
