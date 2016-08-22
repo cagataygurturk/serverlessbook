@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.ParameterizedType;
 
 public abstract class LambdaHandler<I, O> implements RequestStreamHandler {
 
@@ -14,6 +15,11 @@ public abstract class LambdaHandler<I, O> implements RequestStreamHandler {
 
     protected LambdaHandler() {
         mapper = new ObjectMapper();
+    }
+
+    @SuppressWarnings("unchecked")
+    private Class<I> getInputType() {
+        return (Class<I>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     @Override
