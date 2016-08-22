@@ -32,6 +32,9 @@ public abstract class LambdaHandler<I, O> implements RequestStreamHandler {
 
     @Override
     public void handleRequest(InputStream input, OutputStream output, Context context) throws IOException {
+        I inputObject = deserializeEventJson(input, getInputType());
+        O handlerResult = handleRequest(inputObject, context);
+        serializeOutput(output, handlerResult);
     }
 
     public abstract O handleRequest(I input, Context context);
