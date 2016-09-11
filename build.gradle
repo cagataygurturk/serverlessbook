@@ -53,11 +53,21 @@ allprojects {
     }
 }
 
+def deploymentBucketName = "serverless-book-${aws.region}"
+def deploymentTime = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+
+allprojects {
+    apply plugin: "jp.classmethod.aws.s3"
+    task createDeploymentBucket(type: jp.classmethod.aws.gradle.s3.CreateBucketTask) {
+        bucketName deploymentBucketName
+        ifNotExists true
+    }
+}
+
 configure(subprojects.findAll { it.name.startsWith("lambda-") }) {
     dependencies {
         compile project(':lambda')
     }
-
     apply plugin: "com.github.johnrengelman.shadow"
     build.finalizedBy shadowJar
 }
