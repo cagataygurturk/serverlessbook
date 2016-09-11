@@ -36,6 +36,14 @@ buildscript {
 
     dependencies {
         classpath "com.github.jengelman.gradle.plugins:shadow:1.2.3"
+        classpath "jp.classmethod.aws:gradle-aws-plugin:0.31"
+    }
+}
+
+allprojects {
+    apply plugin: "jp.classmethod.aws"
+    aws {
+        region = "us-east-1"
     }
 }
 
