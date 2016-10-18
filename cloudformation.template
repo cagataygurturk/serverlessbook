@@ -13,7 +13,7 @@
               "Principal": {
                 "Service": [
                   "lambda.amazonaws.com"
-                 ]
+                ]
               },
               "Action": [
                 "sts:AssumeRole"
@@ -23,6 +23,29 @@
         },
         "ManagedPolicyArns": [
           "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+        ]
+      }
+    },
+    "LambdaCustomPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "LambdaCustomPolicy",
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:ListBuckets"
+              ],
+              "Resource": "*"
+            }
+          ]
+        },
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
         ]
       }
     }
