@@ -48,6 +48,26 @@
           }
         ]
       }
+    },
+    "TestLambda": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Handler": "com.serverlessbook.lambda.test.Handler",
+        "Runtime": "java8",
+        "Timeout": "300",
+        "MemorySize": "1024",
+        "Description": "Test lambda",
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Code": {
+          "S3Bucket": "serverlessbook-us-east-1",
+          "S3Key": "artifacts/lambda-test/1.0/12313123123.jar"
+        }
+      }
     }
   }
 }
