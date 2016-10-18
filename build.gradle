@@ -90,6 +90,13 @@ cloudFormation {
     templateBucket deploymentBucketName
     templateKeyPrefix "cfn-templates"
     stackName "serverlessbook"
+    conventionMapping.stackParams = {
+        return [
+                DeploymentBucket: deploymentBucketName,
+                ProjectVersion  : project.version,
+                DeploymentTime  : deploymentTime
+        ]
+    }
 }
 
 awsCfnMigrateStack.dependsOn awsCfnUploadTemplate
