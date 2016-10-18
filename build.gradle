@@ -93,3 +93,10 @@ cloudFormation {
 }
 
 awsCfnMigrateStack.dependsOn awsCfnUploadTemplate
+
+task deploy {
+    configure(subprojects.findAll { it.name.startsWith("lambda-") }) {
+        dependsOn it.uploadArtifactsToS3
+    }
+    finalizedBy awsCfnMigrateStackAndWaitCompleted
+}
