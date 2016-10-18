@@ -81,3 +81,15 @@ configure(subprojects.findAll { it.name.startsWith("lambda-") }) {
         key s3Key
     }
 }
+
+apply plugin: "jp.classmethod.aws.cloudformation"
+
+cloudFormation {
+    capabilityIam true
+    templateFile project.file('cloudformation.template')
+    templateBucket deploymentBucketName
+    templateKeyPrefix "cfn-templates"
+    stackName "serverlessbook"
+}
+
+awsCfnMigrateStack.dependsOn awsCfnUploadTemplate
