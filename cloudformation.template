@@ -78,8 +78,12 @@
           ]
         },
         "Code": {
-          "S3Bucket": "serverlessbook-us-east-1",
-          "S3Key": "artifacts/lambda-test/1.0/12313123123.jar"
+          "S3Bucket": {
+            "Ref": "DeploymentBucket"
+          },
+          "S3Key": {
+            "Fn::Sub": "artifacts/lambda-test/${ProjectVersion}/${DeploymentTime}.jar"
+          }
         }
       }
     }
