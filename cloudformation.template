@@ -1,5 +1,19 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "DeploymentBucket": {
+      "Type": "String",
+      "Description": "S3 bucket name where built artifacts are deployed"
+    },
+    "ProjectVersion": {
+      "Type": "String",
+      "Description": "Project Version"
+    },
+    "DeploymentTime": {
+      "Type": "String",
+      "Description": "It is a timestamp value which shows the deployment time. Used to rotate sources."
+    }
+  },
   "Resources": {
     "LambdaExecutionRole": {
       "Type": "AWS::IAM::Role",
