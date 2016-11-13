@@ -49,6 +49,14 @@
         }
       }
     },
+    "RestApi": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Name": {
+          "Ref": "AWS::StackName"
+        }
+      }
+    },
     "LambdaExecutionRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
