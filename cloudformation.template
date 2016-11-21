@@ -263,6 +263,27 @@
           "Fn::Sub": "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*"
         }
       }
+    },
+    "ApiDeployment": {
+      "DependsOn": [
+        "TestGetMethod"
+      ],
+      "Type": "Custom::ApiDeployment",
+      "Properties": {
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "DeploymentLambda",
+            "Arn"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "RestApi"
+        },
+        "StageName": "production",
+        "DeploymentTime": {
+          "Ref": "DeploymentTime"
+        }
+      }
     }
   }
 }
