@@ -128,6 +128,21 @@
           }
         }
       }
+    },
+    "TestResource": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "PathPart": "test",
+        "RestApiId": {
+          "Ref": "RestApi"
+        },
+        "ParentId": {
+          "Fn::GetAtt": [
+            "RestApi",
+            "RootResourceId"
+          ]
+        }
+      }
     }
   }
 }
