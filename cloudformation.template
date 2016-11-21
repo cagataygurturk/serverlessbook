@@ -143,6 +143,49 @@
           ]
         }
       }
+    },
+    "TestGetMethod": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RestApiId": {
+          "Ref": "RestApi"
+        },
+        "ResourceId": {
+          "Ref": "TestResource"
+        },
+        "AuthorizationType": "NONE",
+        "RequestParameters": {
+          "method.request.querystring.value": "True",
+          "method.request.header.Accept": "True"
+        },
+        "MethodResponses": [
+          {
+            "StatusCode": "200"
+          }
+        ],
+        "Integration": {
+          "Type": "AWS",
+          "Uri": {
+            "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TestLambda.Arn}/invocations"
+          },
+          "IntegrationHttpMethod": "POST",
+          "RequestParameters": {
+            "integration.request.querystring.value": "method.request.querystring.value",
+            "integration.request.header.Accept": "method.request.header.Accept"
+          },
+          "RequestTemplates": {
+            "application/json": "{\"value\":\"$input.params('value')\"}"
+          },
+          "PassthroughBehavior": "NEVER",
+          "IntegrationResponses": [
+            {
+              "SelectionPattern": ".*",
+              "StatusCode": "200"
+            }
+          ]
+        }
+      }
     }
   }
 }
