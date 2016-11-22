@@ -12,6 +12,10 @@
     "DeploymentTime": {
       "Type": "String",
       "Description": "It is a timestamp value which shows the deployment time. Used to rotate sources."
+    },
+    "DomainName": {
+      "Type": "String",
+      "Description": "Domain Name to serve the application"
     }
   },
   "Resources": {
