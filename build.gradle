@@ -94,7 +94,8 @@ cloudFormation {
         return [
                 DeploymentBucket: deploymentBucketName,
                 ProjectVersion  : project.version,
-                DeploymentTime  : deploymentTime
+                DeploymentTime  : deploymentTime,
+                DomainName      : "serverlessbook.merkurapp.com"
         ]
     }
 }
