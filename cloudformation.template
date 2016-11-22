@@ -284,6 +284,55 @@
           "Ref": "DeploymentTime"
         }
       }
+    },
+    "CloudformationDistribution": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "Enabled": "true",
+          "HttpVersion": "http2",
+          "Origins": [
+            {
+              "DomainName": {
+                "Fn::Sub": "${RestApi}.execute-api.${AWS::Region}.amazonaws.com"
+              },
+              "OriginPath": "/production",
+              "Id": "APIGATEWAY",
+              "CustomOriginConfig": {
+                "OriginProtocolPolicy": "https-only"
+              }
+            }
+          ],
+          "DefaultCacheBehavior": {
+            "TargetOriginId": "APIGATEWAY",
+            "Compress": true,
+            "AllowedMethods": [
+              "DELETE",
+              "GET",
+              "HEAD",
+              "OPTIONS",
+              "PATCH",
+              "POST",
+              "PUT"
+            ],
+            "ForwardedValues": {
+              "QueryString": "true",
+              "Cookies": {
+                "Forward": "none"
+              },
+              "Headers": [
+                "Accept",
+                "Content-Type",
+                "Authorization"
+              ]
+            },
+            "DefaultTTL": 0,
+            "MaxTTL": 0,
+            "MinTTL": 0,
+            "ViewerProtocolPolicy": "redirect-to-https"
+          }
+        }
+      }
     }
   }
 }
