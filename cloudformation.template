@@ -293,6 +293,17 @@
       "Type": "AWS::CloudFront::Distribution",
       "Properties": {
         "DistributionConfig": {
+          "Aliases": [
+            {
+              "Ref": "DomainName"
+            }
+          ],
+          "ViewerCertificate": {
+            "SslSupportMethod": "sni-only",
+            "AcmCertificateArn": {
+              "Ref": "SSLCertificate"
+            }
+          },
           "Enabled": "true",
           "HttpVersion": "http2",
           "Origins": [
