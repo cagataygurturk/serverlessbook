@@ -373,6 +373,22 @@
           }
         ]
       }
+    },
+    "SSLCertificate": {
+      "Type": "AWS::CertificateManager::Certificate",
+      "Properties": {
+        "DomainName": {
+          "Ref": "DomainName"
+        },
+        "DomainValidationOptions": [
+          {
+            "DomainName": {
+              "Ref": "DomainName"
+            },
+            "ValidationDomain": "merkurapp.com"
+          }
+        ]
+      }
     }
   }
 }
