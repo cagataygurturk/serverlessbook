@@ -337,6 +337,17 @@
           }
         }
       }
+    },
+    "Route53HostedZone": {
+      "Type": "AWS::Route53::HostedZone",
+      "Properties": {
+        "HostedZoneConfig": {
+          "Comment": "Serverless Book Project Hosted Zone"
+        },
+        "Name": {
+          "Ref": "DomainName"
+        }
+      }
     }
   }
 }
