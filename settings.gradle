@@ -1,3 +1,4 @@
 rootProject.name = 'forum'
 include 'lambda'
 include 'lambda-test'
+include 'lambda-authorizer'
