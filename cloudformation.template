@@ -425,6 +425,28 @@
           }
         }
       }
+    },
+    "ApiGatewayAuthorizer": {
+      "Type": "AWS::ApiGateway::Authorizer",
+      "Properties": {
+        "Name": "AUTHORIZER",
+        "Type": "TOKEN",
+        "RestApiId": {
+          "Ref": "RestApi"
+        },
+        "AuthorizerUri": {
+          "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AuthorizerLambda.Arn}/invocations"
+        },
+        "AuthorizerCredentials": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "IdentitySource": "method.request.header.Authorization",
+        "IdentityValidationExpression": "Bearer ?[a-zA-Z_0-9+=,.@\\-_/-]+",
+        "AuthorizerResultTtlInSeconds": 120
+      }
     }
   }
 }
