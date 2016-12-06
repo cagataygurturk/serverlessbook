@@ -400,6 +400,30 @@
           }
         ]
       }
+    },
+    "AuthorizerLambda": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Handler": "com.serverlessbook.lambda.authorizer.Handler",
+        "Runtime": "java8",
+        "Timeout": "300",
+        "MemorySize": "1024",
+        "Description": "Test lambda",
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Code": {
+          "S3Bucket": {
+            "Ref": "DeploymentBucket"
+          },
+          "S3Key": {
+            "Fn::Sub": "artifacts/lambda-authorizer/${ProjectVersion}/${DeploymentTime}.jar"
+          }
+        }
+      }
     }
   }
 }
