@@ -1,6 +1,8 @@
 package com.serverlessbook.lambda.authorizer;
 
 import com.amazonaws.services.lambda.runtime.Context;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.serverlessbook.lambda.LambdaHandler;
 import com.serverlessbook.lambda.authorizer.models.AuthorizationInput;
 import com.serverlessbook.lambda.authorizer.models.AuthorizationOutput;
@@ -8,6 +10,8 @@ import com.serverlessbook.lambda.authorizer.models.policy.PolicyDocument;
 import com.serverlessbook.lambda.authorizer.models.policy.PolicyStatement;
 
 public class Handler extends LambdaHandler<AuthorizationInput, AuthorizationOutput> {
+
+    private static final Injector INJECTOR = Guice.createInjector(new DependencyInjectionModule());
 
     @Override
     public AuthorizationOutput handleRequest(AuthorizationInput input, Context context) {
