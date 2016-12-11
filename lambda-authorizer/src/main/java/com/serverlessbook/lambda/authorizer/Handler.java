@@ -8,7 +8,9 @@ import com.serverlessbook.lambda.authorizer.models.AuthorizationInput;
 import com.serverlessbook.lambda.authorizer.models.AuthorizationOutput;
 import com.serverlessbook.lambda.authorizer.models.policy.PolicyDocument;
 import com.serverlessbook.lambda.authorizer.models.policy.PolicyStatement;
+import com.serverlessbook.services.user.UserNotFoundException;
 import com.serverlessbook.services.user.UserService;
+import com.serverlessbook.services.user.domain.User;
 
 import javax.inject.Inject;
 import java.util.Objects;
@@ -31,12 +33,20 @@ public class Handler extends LambdaHandler<AuthorizationInput, AuthorizationOutp
 
     @Override
     public AuthorizationOutput handleRequest(AuthorizationInput input, Context context) {
-        final String validToken = "serverless";
         final String authenticationToken = input.getAuthorizationToken();
         final PolicyDocument policyDocument = new PolicyDocument();
-        final PolicyStatement.Effect policyEffect = "serverless".equals(authenticationToken) ? PolicyStatement.Effect.ALLOW : PolicyStatement.Effect.DENY;
+        PolicyStatement.Effect policyEffect = PolicyStatement.Effect.ALLOW;
+        String principalId = null;
+
+        try {
+            User authenticatedUser = userService.getUserByToken(authenticationToken);
+            principalId = String.valueOf(authenticatedUser.getId());
+        } catch (UserNotFoundException userNotFoundException) {
+            policyEffect = PolicyStatement.Effect.DENY;
+        }
+
         policyDocument.withPolicyStatement(new PolicyStatement("execute-api:Invoke",
                 policyEffect, input.getMethodArn()));
-        return new AuthorizationOutput("1234", policyDocument);
+        return new AuthorizationOutput(principalId, policyDocument);
     }
 }
