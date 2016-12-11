@@ -11,6 +11,7 @@ import com.serverlessbook.lambda.authorizer.models.policy.PolicyStatement;
 import com.serverlessbook.services.user.UserService;
 
 import javax.inject.Inject;
+import java.util.Objects;
 
 public class Handler extends LambdaHandler<AuthorizationInput, AuthorizationOutput> {
 
@@ -21,6 +22,11 @@ public class Handler extends LambdaHandler<AuthorizationInput, AuthorizationOutp
     @Inject
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    public Handler() {
+        INJECTOR.injectMembers(this);
+        Objects.requireNonNull(userService);
     }
 
     @Override
