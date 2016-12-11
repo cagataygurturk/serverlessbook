@@ -11,6 +11,7 @@ import com.serverlessbook.lambda.authorizer.models.policy.PolicyStatement;
 import com.serverlessbook.services.user.UserNotFoundException;
 import com.serverlessbook.services.user.UserService;
 import com.serverlessbook.services.user.domain.User;
+import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
 import java.util.Objects;
@@ -18,6 +19,8 @@ import java.util.Objects;
 public class Handler extends LambdaHandler<AuthorizationInput, AuthorizationOutput> {
 
     private static final Injector INJECTOR = Guice.createInjector(new DependencyInjectionModule());
+
+    private static final Logger LOGGER = Logger.getLogger(Handler.class);
 
     private UserService userService;
 
