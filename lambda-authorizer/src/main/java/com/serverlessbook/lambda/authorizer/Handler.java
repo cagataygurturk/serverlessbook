@@ -46,6 +46,7 @@ public class Handler extends LambdaHandler<AuthorizationInput, AuthorizationOutp
             principalId = String.valueOf(authenticatedUser.getId());
         } catch (UserNotFoundException userNotFoundException) {
             policyEffect = PolicyStatement.Effect.DENY;
+            LOGGER.info("User authentication failed for token " + authenticationToken);
         }
 
         policyDocument.withPolicyStatement(new PolicyStatement("execute-api:Invoke",
