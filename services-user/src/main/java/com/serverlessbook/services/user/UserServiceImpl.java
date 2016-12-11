@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByToken(String token) throws UserNotFoundException {
-        throw new UserNotFoundException();
+        return userRepository.getUserByToken(token).orElseThrow(UserNotFoundException::new);
     }
 
 }
