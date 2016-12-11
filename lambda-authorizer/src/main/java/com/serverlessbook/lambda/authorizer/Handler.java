@@ -8,10 +8,20 @@ import com.serverlessbook.lambda.authorizer.models.AuthorizationInput;
 import com.serverlessbook.lambda.authorizer.models.AuthorizationOutput;
 import com.serverlessbook.lambda.authorizer.models.policy.PolicyDocument;
 import com.serverlessbook.lambda.authorizer.models.policy.PolicyStatement;
+import com.serverlessbook.services.user.UserService;
+
+import javax.inject.Inject;
 
 public class Handler extends LambdaHandler<AuthorizationInput, AuthorizationOutput> {
 
     private static final Injector INJECTOR = Guice.createInjector(new DependencyInjectionModule());
+
+    private UserService userService;
+
+    @Inject
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public AuthorizationOutput handleRequest(AuthorizationInput input, Context context) {
