@@ -108,3 +108,7 @@ task deploy {
     }
     finalizedBy awsCfnMigrateStackAndWaitCompleted
 }
+
+ext {
+    guiceVersion = '4.1.+'
+}
