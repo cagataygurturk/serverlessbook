@@ -1,19 +1,25 @@
 package com.serverlessbook.services.user.domain;
 
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+
 public class User {
 
+    @DynamoDBHashKey(attributeName = "UserId")
     private String id;
 
+    @DynamoDBAttribute(attributeName = "Username")
     private String username;
 
+    @DynamoDBAttribute(attributeName = "EMail")
     private String email;
 
     public String getId() {
         return id;
     }
 
-    public User withId(String id) {
+    public User setId(String id) {
         this.id = id;
         return this;
     }
@@ -22,7 +28,7 @@ public class User {
         return username;
     }
 
-    public User withUsername(String username) {
+    public User setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -31,7 +37,7 @@ public class User {
         return email;
     }
 
-    public User withEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
         return this;
     }
