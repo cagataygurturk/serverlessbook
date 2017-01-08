@@ -116,4 +116,5 @@ task deploy {
 
 ext {
     guiceVersion = '4.1.+'
+    awsSdkVersion = '1.11.+'
 }
