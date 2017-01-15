@@ -493,11 +493,14 @@
     },
     "UserTable": {
       "Type": "AWS::DynamoDB::Table",
-      "DeletionPolicy": "Retain",
       "Properties": {
         "AttributeDefinitions": [
           {
             "AttributeName": "UserId",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "Username",
             "AttributeType": "S"
           }
         ],
@@ -505,6 +508,24 @@
           {
             "AttributeName": "UserId",
             "KeyType": "HASH"
+          }
+        ],
+        "GlobalSecondaryIndexes": [
+          {
+            "IndexName": "UsernameIndex",
+            "KeySchema": [
+              {
+                "AttributeName": "Username",
+                "KeyType": "HASH"
+              }
+            ],
+            "Projection": {
+              "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 1,
+              "WriteCapacityUnits": 1
+            }
           }
         ],
         "ProvisionedThroughput": {
