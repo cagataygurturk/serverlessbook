@@ -132,3 +132,11 @@ def getDynamoDbTableNamesFromCloudformationStack(stackName) {
                 .describeStackResources(new DescribeStackResourcesRequest().withStackName(stackName))
                 .getStackResources().findAll { stackResource -> stackResource.getResourceType() == "AWS::DynamoDB::Table" }
 }
+
+subprojects {
+    test {
+        getDynamoDbTableNamesFromCloudformationStack(cloudFormation.stackName).each {
+            environment 'DynamoDb' + it.getLogicalResourceId(), it.getPhysicalResourceId()
+        }
+    }
+}
