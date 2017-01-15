@@ -2,6 +2,8 @@ package com.serverlessbook.services.user.repository;
 
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import com.serverlessbook.services.user.domain.Token;
 import com.serverlessbook.services.user.domain.User;
 
@@ -31,5 +33,21 @@ public class UserRepositoryDynamoDB implements UserRepository {
     @Override
     public void saveUser(User user) {
         dynamoDBMapper.save(user);
+    }
+
+    public Optional<User> getUserByCriteria(String indexName, User hashKeyValues) {
+
+        DynamoDBQueryExpression<User> expression = new DynamoDBQueryExpression<User>()
+                .withIndexName(indexName)
+                .withConsistentRead(false)
+                .withHashKeyValues(hashKeyValues);
+
+        QueryResultPage<User> result = dynamoDBMapper.queryPage(User.class, expression);
+
+        if (result.getCount() > 0) {
+            return Optional.of(result.getResults().get(0));
+        }
+
+        return Optional.empty();
     }
 }
