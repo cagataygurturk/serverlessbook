@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.serverlessbook.repository.DynamoDBMapperWithCustomTableName;
 import com.serverlessbook.services.user.exception.AnotherUserWithSameEmailExistsException;
 import com.serverlessbook.services.user.exception.AnotherUserWithSameUsernameExistsException;
+import com.serverlessbook.services.user.exception.InvalidMailAddressException;
 import com.serverlessbook.services.user.repository.UserRepositoryDynamoDB;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,6 +48,16 @@ public class UserServiceImplTest {
         userService.registerNewUser(UUID.randomUUID().toString(), email);
         //Second call should fail
         userService.registerNewUser(UUID.randomUUID().toString(), email);
+    }
+
+    @Test
+    public void failedUserRegistrationWithInvalidEmailTest() throws Exception {
+
+        thrown.expect(InvalidMailAddressException.class);
+
+        UserService userService = getUserService();
+
+        userService.registerNewUser(UUID.randomUUID().toString(), "INVALID_EMAIL");
     }
 
 }
