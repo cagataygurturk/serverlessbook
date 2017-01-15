@@ -118,3 +118,17 @@ ext {
     guiceVersion = '4.1.+'
     awsSdkVersion = '1.11.+'
 }
+
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
+import com.amazonaws.regions.Region
+import com.amazonaws.regions.Regions
+import com.amazonaws.services.cloudformation.AmazonCloudFormationClient
+import com.amazonaws.services.cloudformation.model.DescribeStackResourcesRequest
+
+
+def getDynamoDbTableNamesFromCloudformationStack(stackName) {
+        return Region.getRegion(Regions.fromName(aws.region))
+                .createClient(AmazonCloudFormationClient.class, new DefaultAWSCredentialsProviderChain(), null)
+                .describeStackResources(new DescribeStackResourcesRequest().withStackName(stackName))
+                .getStackResources().findAll { stackResource -> stackResource.getResourceType() == "AWS::DynamoDB::Table" }
+}
