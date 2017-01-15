@@ -28,4 +28,8 @@ public class UserRepositoryDynamoDB implements UserRepository {
         return Optional.empty();
     }
 
+    @Override
+    public void saveUser(User user) {
+        dynamoDBMapper.save(user);
+    }
 }
