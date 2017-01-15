@@ -502,6 +502,10 @@
           {
             "AttributeName": "Username",
             "AttributeType": "S"
+          },
+          {
+            "AttributeName": "Email",
+            "AttributeType": "S"
           }
         ],
         "KeySchema": [
@@ -516,6 +520,22 @@
             "KeySchema": [
               {
                 "AttributeName": "Username",
+                "KeyType": "HASH"
+              }
+            ],
+            "Projection": {
+              "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 1,
+              "WriteCapacityUnits": 1
+            }
+          },
+          {
+            "IndexName": "EmailIndex",
+            "KeySchema": [
+              {
+                "AttributeName": "Email",
                 "KeyType": "HASH"
               }
             ],
