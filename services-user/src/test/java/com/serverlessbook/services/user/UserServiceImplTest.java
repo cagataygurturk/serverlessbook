@@ -2,6 +2,7 @@ package com.serverlessbook.services.user;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.serverlessbook.repository.DynamoDBMapperWithCustomTableName;
+import com.serverlessbook.services.user.exception.AnotherUserWithSameEmailExistsException;
 import com.serverlessbook.services.user.exception.AnotherUserWithSameUsernameExistsException;
 import com.serverlessbook.services.user.repository.UserRepositoryDynamoDB;
 import org.junit.Rule;
@@ -32,6 +33,20 @@ public class UserServiceImplTest {
         userService.registerNewUser(username, UUID.randomUUID() + "@test.com");
         //Second call should fail
         userService.registerNewUser(username, UUID.randomUUID() + "@test.com");
+    }
+
+    @Test
+    public void failedUserRegistrationWithExistingEMailTest() throws Exception {
+
+        thrown.expect(AnotherUserWithSameEmailExistsException.class);
+
+        UserService userService = getUserService();
+
+        final String email = UUID.randomUUID() + "@test.com";
+
+        userService.registerNewUser(UUID.randomUUID().toString(), email);
+        //Second call should fail
+        userService.registerNewUser(UUID.randomUUID().toString(), email);
     }
 
 }
