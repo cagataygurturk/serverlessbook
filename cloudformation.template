@@ -443,6 +443,16 @@
           "S3Key": {
             "Fn::Sub": "artifacts/lambda-authorizer/${ProjectVersion}/${DeploymentTime}.jar"
           }
+        },
+        "Environment": {
+          "Variables": {
+            "DynamoDbTokenTable": {
+              "Ref": "TokenTable"
+            },
+            "DynamoDbUserTable": {
+              "Ref": "UserTable"
+            }
+          }
         }
       }
     },
