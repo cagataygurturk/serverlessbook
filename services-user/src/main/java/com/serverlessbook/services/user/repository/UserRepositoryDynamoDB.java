@@ -50,4 +50,14 @@ public class UserRepositoryDynamoDB implements UserRepository {
 
         return Optional.empty();
     }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return getUserByCriteria("EmailIndex", new User().setEmail(email));
+    }
+
+    @Override
+    public Optional<User> getUserByUsername(String username) {
+        return getUserByCriteria("UsernameIndex", new User().setUsername(username));
+    }
 }
