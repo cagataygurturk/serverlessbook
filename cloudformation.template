@@ -623,6 +623,74 @@
           ]
         }
       }
-    }
+    },
+    "UsersPostMethod": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RestApiId": {
+          "Ref": "RestApi"
+        },
+        "ResourceId": {
+          "Ref": "UsersResource"
+        },
+        "AuthorizationType": "NONE",
+        "RequestParameters": {
+        },
+        "MethodResponses": [
+          {
+            "StatusCode": "201",
+            "ResponseParameters": {
+              "method.response.header.Location": "true"
+            }
+          },
+          {
+            "StatusCode": "400"
+          },
+          {
+            "StatusCode": "409"
+          }
+        ],
+        "Integration": {
+          "Type": "AWS",
+          "Uri": {
+            "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UserRegistrationLambda.Arn}/invocations"
+          },
+          "IntegrationHttpMethod": "POST",
+          "RequestParameters": {
+          },
+          "RequestTemplates": {
+            "application/json": "{\"username\": $input.json('$.username'),\"email\": $input.json('$.email')}"
+          },
+          "PassthroughBehavior": "NEVER",
+          "IntegrationResponses": [
+            {
+              "SelectionPattern": ".*",
+              "StatusCode": "201",
+              "ResponseParameters": {
+                "method.response.header.Location": "integration.response.body.resourceUrl"
+              },
+              "ResponseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))"
+              }
+            },
+            {
+              "SelectionPattern": ".*not valid.*",
+              "StatusCode": "400",
+              "ResponseTemplates": {
+                "application/json": "{\"code\": 400, \"errorMessage\":\"$input.path('$.errorMessage')\"}"
+              }
+            },
+            {
+              "SelectionPattern": ".*already exists.*",
+              "StatusCode": "409",
+              "ResponseTemplates": {
+                "application/json": "{\"code\": 409, \"errorMessage\":\"$input.path('$.errorMessage')\"}"
+              }
+            }
+          ]
+        }
+      }
+    },
   }
 }
