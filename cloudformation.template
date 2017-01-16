@@ -574,6 +574,40 @@
           "WriteCapacityUnits": 1
         }
       }
+    },
+    "UserRegistrationLambda": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Handler": "com.serverlessbook.lambda.userregistration.Handler",
+        "Runtime": "java8",
+        "Timeout": "300",
+        "MemorySize": "1024",
+        "Description": "User registration Lambda",
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Code": {
+          "S3Bucket": {
+            "Ref": "DeploymentBucket"
+          },
+          "S3Key": {
+            "Fn::Sub": "artifacts/lambda-userregistration/${ProjectVersion}/${DeploymentTime}.jar"
+          }
+        },
+        "Environment": {
+          "Variables": {
+            "DynamoDbTokenTable": {
+              "Ref": "TokenTable"
+            },
+            "DynamoDbUserTable": {
+              "Ref": "UserTable"
+            }
+          }
+        }
+      }
     }
   }
 }
