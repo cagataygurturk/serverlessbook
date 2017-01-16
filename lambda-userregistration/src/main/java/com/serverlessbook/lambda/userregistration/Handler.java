@@ -3,8 +3,14 @@ package com.serverlessbook.lambda.userregistration;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.serverlessbook.lambda.LambdaHandler;
+import com.serverlessbook.services.user.UserService;
 import com.serverlessbook.services.user.domain.User;
+
+import javax.inject.Inject;
+import java.util.Objects;
 
 public class Handler extends LambdaHandler<Handler.RegistrationInput, Handler.RegistrationOutput> {
 
@@ -37,6 +43,20 @@ public class Handler extends LambdaHandler<Handler.RegistrationInput, Handler.Re
         public String getResourceUrl() {
             return resourceUrl;
         }
+    }
+
+    private static final Injector INJECTOR = Guice.createInjector(new DependencyInjectionModule());
+
+    private UserService userService;
+
+    @Inject
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public Handler() {
+        INJECTOR.injectMembers(this);
+        Objects.requireNonNull(userService);
     }
 
     @Override
