@@ -734,6 +734,29 @@
       "Properties": {
         "BucketName": {
           "Fn::Sub": "${DomainName}-profilepictures"
+        },
+        "NotificationConfiguration": {
+          "LambdaConfigurations": [
+            {
+              "Event": "s3:ObjectCreated:*",
+              "Filter": {
+                "S3Key": {
+                  "Rules": [
+                    {
+                      "Name": "prefix",
+                      "Value": "uploads/"
+                    }
+                  ]
+                }
+              },
+              "Function": {
+                "Fn::GetAtt": [
+                  "ImageResizerLambda",
+                  "Arn"
+                ]
+              }
+            }
+          ]
         }
       }
     }
