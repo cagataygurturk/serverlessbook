@@ -759,6 +759,19 @@
           ]
         }
       }
+    },
+    "ImageResizerLambdaPermisson": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "ImageResizerLambda"
+        },
+        "Principal": "s3.amazonaws.com",
+        "SourceArn": {
+          "Fn::Sub": "arn:aws:s3:::${DomainName}-profilepictures"
+        }
+      }
     }
   }
 }
