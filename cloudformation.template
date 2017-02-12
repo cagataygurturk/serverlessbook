@@ -704,6 +704,30 @@
           "Fn::Sub": "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*"
         }
       }
+    },
+    "ImageResizerLambda": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Handler": "com.serverlessbook.lambda.imageresizer.Handler",
+        "Runtime": "java8",
+        "Timeout": "300",
+        "MemorySize": "1024",
+        "Description": "Test lambda",
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Code": {
+          "S3Bucket": {
+            "Ref": "DeploymentBucket"
+          },
+          "S3Key": {
+            "Fn::Sub": "artifacts/lambda-imageresizer/${ProjectVersion}/${DeploymentTime}.jar"
+          }
+        }
+      }
     }
   }
 }
