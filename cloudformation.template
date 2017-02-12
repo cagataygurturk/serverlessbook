@@ -728,6 +728,14 @@
           }
         }
       }
+    },
+    "ProfilePicturesBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Fn::Sub": "${DomainName}-profilepictures"
+        }
+      }
     }
   }
 }
