@@ -817,6 +817,30 @@
           }
         ]
       }
+    },
+    "UsersIdResource": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "PathPart": "{id}",
+        "RestApiId": {
+          "Ref": "RestApi"
+        },
+        "ParentId": {
+          "Ref": "UsersResource"
+        }
+      }
+    },
+    "UsersIdPictureResource": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "PathPart": "picture",
+        "RestApiId": {
+          "Ref": "RestApi"
+        },
+        "ParentId": {
+          "Ref": "UsersIdResource"
+        }
+      }
     }
   }
 }
