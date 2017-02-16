@@ -772,6 +772,51 @@
           "Fn::Sub": "arn:aws:s3:::${DomainName}-profilepictures"
         }
       }
+    },
+    "ApiGatewayProxyRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "apigateway.amazonaws.com"
+                ]
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "S3BucketPolicy",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:PutObject",
+                    "s3:PutObjectAcl"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:s3:::${ProfilePicturesBucket}"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:s3:::${ProfilePicturesBucket}/*"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
   }
 }
