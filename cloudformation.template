@@ -337,6 +337,14 @@
               "CustomOriginConfig": {
                 "OriginProtocolPolicy": "https-only"
               }
+            },
+            {
+              "DomainName": {
+                "Fn::Sub": "${ProfilePicturesBucket}.s3.amazonaws.com"
+              },
+              "Id": "PROFILE_PICTURES",
+              "S3OriginConfig": {
+              }
             }
           ],
           "DefaultCacheBehavior": {
