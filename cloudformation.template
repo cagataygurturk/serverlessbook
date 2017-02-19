@@ -374,7 +374,29 @@
             "MaxTTL": 0,
             "MinTTL": 0,
             "ViewerProtocolPolicy": "redirect-to-https"
-          }
+          },
+          "CacheBehaviors": [
+            {
+              "PathPattern": "/users/*/picture/*",
+              "TargetOriginId": "PROFILE_PICTURES",
+              "Compress": true,
+              "AllowedMethods": [
+                "GET",
+                "HEAD",
+                "OPTIONS"
+              ],
+              "ForwardedValues": {
+                "QueryString": "false",
+                "Cookies": {
+                  "Forward": "none"
+                }
+              },
+              "DefaultTTL": 0,
+              "MinTTL": 0,
+              "MaxTTL": 0,
+              "ViewerProtocolPolicy": "redirect-to-https"
+            }
+          ]
         }
       }
     },
