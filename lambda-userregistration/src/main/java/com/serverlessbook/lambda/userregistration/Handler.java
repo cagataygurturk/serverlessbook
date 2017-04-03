@@ -83,6 +83,7 @@ public class Handler extends LambdaHandler<Handler.RegistrationInput, Handler.Re
     @Override
     public RegistrationOutput handleRequest(RegistrationInput input, Context context) {
         User createdUser = userService.registerNewUser(input.username, input.email);
+        notifySnsSubscribers(createdUser);
         return new RegistrationOutput(createdUser);
     }
 }
