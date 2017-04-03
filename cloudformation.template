@@ -645,6 +645,9 @@
             },
             "DynamoDbUserTable": {
               "Ref": "UserTable"
+            },
+            "UserRegistrationSnsTopic": {
+              "Ref":"UserRegistrationSnsTopic"
             }
           }
         }
