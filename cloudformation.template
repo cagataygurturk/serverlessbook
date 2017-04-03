@@ -971,7 +971,17 @@
     "UserRegistrationSnsTopic": {
       "Type": "AWS::SNS::Topic",
       "Properties": {
-        "Subscription": []
+        "Subscription": [
+          {
+            "Endpoint": {
+              "Fn::GetAtt": [
+                "UserRegistrationWelcomeMailLambda",
+                "Arn"
+              ]
+            },
+            "Protocol": "lambda"
+          }
+        ]
       }
     },
     "UserRegistrationWelcomeMailLambda": {
