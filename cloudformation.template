@@ -192,6 +192,13 @@
                   "Ref": "UserRegistrationSnsTopic"
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ses:*"
+              ],
+              "Resource": "*"
             }
           ]
         },
@@ -647,7 +654,7 @@
               "Ref": "UserTable"
             },
             "UserRegistrationSnsTopic": {
-              "Ref":"UserRegistrationSnsTopic"
+              "Ref": "UserRegistrationSnsTopic"
             }
           }
         }
