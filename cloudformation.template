@@ -181,6 +181,17 @@
                   "Fn::Sub": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${UserTable}*"
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "SNS:Publish"
+              ],
+              "Resource": [
+                {
+                  "Ref": "UserRegistrationSnsTopic"
+                }
+              ]
             }
           ]
         },
