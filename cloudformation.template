@@ -946,6 +946,12 @@
           }
         ]
       }
+    },
+    "UserRegistrationSnsTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "Subscription": []
+      }
     }
   }
 }
