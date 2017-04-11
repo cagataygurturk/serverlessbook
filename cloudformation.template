@@ -1025,6 +1025,42 @@
           "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:*"
         }
       }
+    },
+    "UserRegistrationQueue": {
+      "Type": "AWS::SQS::Queue"
+    },
+    "UserRegistrationQueuePolicy": {
+      "Type": "AWS::SQS::QueuePolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": "*",
+              "Action": "SQS:SendMessage",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "UserRegistrationQueue",
+                  "Arn"
+                ]
+              },
+              "Condition": {
+                "ArnEquals": {
+                  "aws:SourceArn": {
+                    "Ref": "UserRegistrationSnsTopic"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "Queues": [
+          {
+            "Ref": "UserRegistrationQueue"
+          }
+        ]
+      }
     }
   }
 }
