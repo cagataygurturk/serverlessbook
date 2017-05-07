@@ -2,26 +2,18 @@ package com.serverlessbook.lambda.userregistration.welcomemail;
 
 
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.amazonaws.services.lambda.runtime.events.SNSEvent;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
-import com.amazonaws.services.simpleemail.model.Body;
-import com.amazonaws.services.simpleemail.model.Content;
-import com.amazonaws.services.simpleemail.model.Destination;
-import com.amazonaws.services.simpleemail.model.Message;
-import com.amazonaws.services.simpleemail.model.SendEmailRequest;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.amazonaws.services.simpleemail.model.*;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-
-import java.io.IOException;
-import java.util.Objects;
-import javax.inject.Inject;
-
+import com.serverlessbook.lambda.SnsLambdaHandler;
 import com.serverlessbook.services.user.domain.User;
 import org.apache.log4j.Logger;
 
-public class Handler implements RequestHandler<SNSEvent, Void> {
+import javax.inject.Inject;
+import java.util.Objects;
+
+public class Handler extends SnsLambdaHandler<User> {
 
     private static final Injector INJECTOR = Guice.createInjector();
 
@@ -64,14 +56,8 @@ public class Handler implements RequestHandler<SNSEvent, Void> {
     }
 
     @Override
-    public Void handleRequest(SNSEvent input, Context context) {
-        input.getRecords().forEach(snsMessage -> {
-            try {
-                sendEmail(new ObjectMapper().readValue(snsMessage.getSNS().getMessage(), User.class));
-            } catch (IOException anyException) {
-                LOGGER.error("JSON could not be deserialized", anyException);
-            }
-        });
-        return null;
+    public void handleSnsRequest(User input, Context context) {
+        sendEmail(input);
     }
+
 }
