@@ -16,6 +16,10 @@
     "DomainName": {
       "Type": "String",
       "Description": "Domain Name to serve the application"
+    },
+    "CloudSearchDomain": {
+      "Type": "String",
+      "Description": "Endpoint Name for CloudSearch domain"
     }
   },
   "Resources": {
