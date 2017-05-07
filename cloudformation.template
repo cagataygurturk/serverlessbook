@@ -313,7 +313,8 @@
     },
     "ApiDeployment": {
       "DependsOn": [
-        "TestGetMethod"
+        "TestGetMethod",
+        "SearchGetMethod"
       ],
       "Type": "Custom::ApiDeployment",
       "Properties": {
