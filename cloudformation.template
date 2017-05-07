@@ -1089,6 +1089,53 @@
           ]
         }
       }
+    },
+    "SearchGetMethod": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RestApiId": {
+          "Ref": "RestApi"
+        },
+        "ResourceId": {
+          "Ref": "SearchResource"
+        },
+        "RequestParameters": {
+          "method.request.querystring.q": "q"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "Type": "AWS",
+          "Uri": {
+            "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:search-${CloudSearchDomain}.cloudsearch:path//2013-01-01/suggest"
+          },
+          "IntegrationHttpMethod": "GET",
+          "Credentials": {
+            "Fn::GetAtt": [
+              "ApiGatewayProxyRole",
+              "Arn"
+            ]
+          },
+          "RequestParameters": {
+            "integration.request.querystring.suggester": "'username_suggester'",
+            "integration.request.querystring.q": "method.request.querystring.q"
+          },
+          "RequestTemplates": {
+          },
+          "PassthroughBehavior": "WHEN_NO_TEMPLATES",
+          "IntegrationResponses": [
+            {
+              "SelectionPattern": ".*",
+              "StatusCode": "200"
+            }
+          ]
+        },
+        "MethodResponses": [
+          {
+            "StatusCode": "200"
+          }
+        ]
+      }
     }
   }
 }
