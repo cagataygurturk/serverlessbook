@@ -4,6 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.sns.AmazonSNSClient;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.serverlessbook.lambda.LambdaHandler;
@@ -68,7 +69,7 @@ public class Handler extends LambdaHandler<Handler.RegistrationInput, Handler.Re
 
     private void notifySnsSubscribers(User user) {
       try {
-        amazonSNSClient.publish(System.getenv("UserRegistrationSnsTopic"), user.getEmail());
+        amazonSNSClient.publish(System.getenv("UserRegistrationSnsTopic"), new ObjectMapper().writeValueAsString(user));
         LOGGER.info("SNS notification sent for "+user.getEmail());
       } catch (Exception anyException) {
         LOGGER.info("SNS notification failed for "+user.getEmail(), anyException);
