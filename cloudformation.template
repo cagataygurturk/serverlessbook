@@ -994,6 +994,15 @@
               ]
             },
             "Protocol": "sqs"
+          },
+          {
+            "Endpoint": {
+              "Fn::GetAtt": [
+                "UserRegistrationCloudSearchLambda",
+                "Arn"
+              ]
+            },
+            "Protocol": "lambda"
           }
         ]
       }
