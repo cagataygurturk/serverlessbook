@@ -1168,6 +1168,19 @@
           }
         }
       }
+    },
+    "UserRegistrationCloudSearchLambdaPermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "UserRegistrationCloudSearchLambda"
+        },
+        "Principal": "sns.amazonaws.com",
+        "SourceArn": {
+          "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:*"
+        }
+      }
     }
   }
 }
