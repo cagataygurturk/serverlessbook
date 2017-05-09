@@ -101,7 +101,7 @@ cloudFormation {
                 ProjectVersion  : project.version,
                 DeploymentTime  : deploymentTime,
                 DomainName      : "serverlessbook.merkurapp.com",
-                CloudSearchDomain: "search-serverlessbook-uiyqpdvcdz7o4hxudtnqzpjdtu"
+                CloudSearchDomain: "serverlessbook-uiyqpdvcdz7o4hxudtnqzpjdtu"
         ]
     }
 }

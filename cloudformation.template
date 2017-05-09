@@ -1137,6 +1137,37 @@
           }
         ]
       }
+    },
+    "UserRegistrationCloudSearchLambda": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Handler": "com.serverlessbook.lambda.userregistration.search.Handler",
+        "Runtime": "java8",
+        "Timeout": "300",
+        "MemorySize": "1024",
+        "Description": "User Registration Search Lambda",
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Code": {
+          "S3Bucket": {
+            "Ref": "DeploymentBucket"
+          },
+          "S3Key": {
+            "Fn::Sub": "artifacts/lambda-userregistration-cloudsearch/${ProjectVersion}/${DeploymentTime}.jar"
+          }
+        },
+        "Environment": {
+          "Variables": {
+            "CloudSearchDomain": {
+              "Fn::Sub": "doc-${CloudSearchDomain}.${AWS::Region}.cloudsearch.amazonaws.com"
+            }
+          }
+        }
+      }
     }
   }
 }
