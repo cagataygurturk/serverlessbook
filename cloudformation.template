@@ -262,10 +262,7 @@
         "ResourceId": {
           "Ref": "TestResource"
         },
-        "AuthorizationType": "CUSTOM",
-        "AuthorizerId": {
-          "Ref": "ApiGatewayAuthorizer"
-        },
+        "AuthorizationType": "NONE",
         "RequestParameters": {
           "method.request.querystring.value": "True",
           "method.request.header.Accept": "True"
