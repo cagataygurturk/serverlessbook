@@ -1187,6 +1187,29 @@
           "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:*"
         }
       }
+    },
+    "TestEndpointHealthCheck": {
+      "Type": "AWS::Route53::HealthCheck",
+      "Properties": {
+        "HealthCheckConfig": {
+          "Port": "443",
+          "Type": "HTTPS",
+          "ResourcePath": "/test",
+          "FullyQualifiedDomainName": {
+            "Ref": "DomainName"
+          },
+          "RequestInterval": "30",
+          "FailureThreshold": "3",
+          "MeasureLatency": "true",
+          "EnableSNI": "true"
+        },
+        "HealthCheckTags": [
+          {
+            "Key": "Name",
+            "Value": "TestEndpoint"
+          }
+        ]
+      }
     }
   }
 }
