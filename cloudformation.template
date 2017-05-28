@@ -1253,6 +1253,43 @@
           }
         ]
       }
+    },
+    "HighErrorRateAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Alert when error rate is > 5%",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "Region",
+            "Value": "Global"
+          },
+          {
+            "Name": "DistributionId",
+            "Value": {
+              "Ref": "CloudformationDistribution"
+            }
+          }
+        ],
+        "MetricName": "TotalErrorRate",
+        "EvaluationPeriods": "1",
+        "Namespace": "AWS/CloudFront",
+        "Period": "300",
+        "Statistic": "Average",
+        "Threshold": "5",
+        "AlarmActions": [
+          {
+            "Ref": "HealthChecksSnsTopic"
+          }
+        ],
+        "OKActions": [
+          {
+            "Ref": "HealthChecksSnsTopic"
+          }
+        ]
+      }
     }
+
   }
 }
