@@ -1221,6 +1221,38 @@
           }
         ]
       }
+    },
+    "HealthChecksAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Alert when Health Check is down",
+        "ComparisonOperator": "LessThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "HealthCheckId",
+            "Value": {
+              "Ref": "TestEndpointHealthCheck"
+            }
+          }
+        ],
+        "EvaluationPeriods": "3",
+        "MetricName": "HealthCheckStatus",
+        "Namespace": "AWS/Route53",
+        "Period": "60",
+        "Statistic": "Minimum",
+        "Threshold": "1",
+        "AlarmActions": [
+          {
+            "Ref": "HealthChecksSnsTopic"
+          }
+        ],
+        "OKActions": [
+          {
+            "Ref": "HealthChecksSnsTopic"
+          }
+        ]
+      }
     }
   }
 }
