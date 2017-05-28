@@ -234,6 +234,21 @@
           "S3Key": {
             "Fn::Sub": "artifacts/lambda-test/${ProjectVersion}/${DeploymentTime}.jar"
           }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            {
+              "Ref": "LambdaSecurityGroup"
+            }
+          ],
+          "SubnetIds": [
+            {
+              "Ref": "PrivateSubnet1"
+            },
+            {
+              "Ref": "PrivateSubnet2"
+            }
+          ]
         }
       }
     },
@@ -503,6 +518,21 @@
               "Ref": "UserTable"
             }
           }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            {
+              "Ref": "LambdaSecurityGroup"
+            }
+          ],
+          "SubnetIds": [
+            {
+              "Ref": "PrivateSubnet1"
+            },
+            {
+              "Ref": "PrivateSubnet2"
+            }
+          ]
         }
       }
     },
@@ -659,6 +689,21 @@
               "Ref": "UserRegistrationSnsTopic"
             }
           }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            {
+              "Ref": "LambdaSecurityGroup"
+            }
+          ],
+          "SubnetIds": [
+            {
+              "Ref": "PrivateSubnet1"
+            },
+            {
+              "Ref": "PrivateSubnet2"
+            }
+          ]
         }
       }
     },
@@ -779,6 +824,21 @@
           "S3Key": {
             "Fn::Sub": "artifacts/lambda-imageresizer/${ProjectVersion}/${DeploymentTime}.jar"
           }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            {
+              "Ref": "LambdaSecurityGroup"
+            }
+          ],
+          "SubnetIds": [
+            {
+              "Ref": "PrivateSubnet1"
+            },
+            {
+              "Ref": "PrivateSubnet2"
+            }
+          ]
         }
       }
     },
@@ -1030,6 +1090,21 @@
           "Variables": {
             "SenderEmail": "info@example.com"
           }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            {
+              "Ref": "LambdaSecurityGroup"
+            }
+          ],
+          "SubnetIds": [
+            {
+              "Ref": "PrivateSubnet1"
+            },
+            {
+              "Ref": "PrivateSubnet2"
+            }
+          ]
         }
       }
     },
@@ -1172,6 +1247,21 @@
               "Fn::Sub": "doc-${CloudSearchDomain}.${AWS::Region}.cloudsearch.amazonaws.com"
             }
           }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            {
+              "Ref": "LambdaSecurityGroup"
+            }
+          ],
+          "SubnetIds": [
+            {
+              "Ref": "PrivateSubnet1"
+            },
+            {
+              "Ref": "PrivateSubnet2"
+            }
+          ]
         }
       }
     },
